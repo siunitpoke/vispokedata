@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.min.css" rel="stylesheet">
+    <style type="text/css">
+      #network {
+        width:  1200px;
+        height: 700px;
+        border: 1px solid #000;
+      }
+    </style>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.min.js"></script>
+
+    <meta charset="utf-8">
+    <title>Pokemon</title>
+    <!-- 外部ファイルとしてJavaScriptファイルを読み込む -->
+    <script src="data.js"></script>
+    <script src="ver2.js"></script>
+  </head>
+
+  <div style="display:inline-flex">
+  <form name="rankf">
+    <select name="rankn" onchange="inputrank()">
+      <option>順位</option> 
+      <option>10</option>
+      <option>100</option>
+      <option>すべて</option>
+      <option>選択なし</option>
+      <option>入力</option>
+    </select>
+    </form> 
+    <form name="seasonf">
+      <select name="seasonn" id="seasonid"s onchange="inputseason()">
+        <option>シーズン</option> 
+        <option>すべて</option>
+        <option>入力</option>
+
+      </select>
+      
+      </form> 
+  <form name="navi1">
+    <select name="contents1" id="inputpokemonname" onchange="inputpokemonnamef()">
+      <option>ポケモン名</option> 
+      <option>選択なし</option>
+      <option>入力</option>
+    </select>
+    </form>
+    <form name="navi2">
+      <select name="contents2" id = "terasuselect" onchange="inputterasutype()">
+        <option>テラスタイプ</option> 
+        <option>選択なし</option>
+        <option>入力</option>
+      </select>
+      </form> 
+      <form name="navi3">
+        <select name="contents3" id = "itemselect" onchange="inputitem()">
+          <option>持ち物</option> 
+          <option>選択なし</option>
+          <option>入力</option>
+        </select>
+        </form> 
+      </div>
+
+
+  <body>
+
+<!-- <input type="button" value="パーティー" onclick="watchparty()">
+<input type="button" value="持ち物" onclick="item_list()">
+<input type="button" value="テラスタイプ" onclick="t_list()"> -->
+<!-- <input type="button" value="gurafu" onclick="makegraph()"> -->
+<!-- <input type="button" value="setData" onclick="setdata()"> -->
+<!-- <input type="button" value="stopSimulation" onclick="network.stopSimulation()"> -->
+<!-- <input type="button" value="startSimulation" onclick="network.startSimulation()"> -->
+<!-- <input type="button" value="redraw" onclick="network.redraw()"> -->
+<input type="button" value="console.log" onclick="console.log(nodes,edges)">
+<!-- <input type="button" value="Graphcreate" onclick="graphcreate()"> -->
+<input type="button" style="color: red;    width: 200px;
+padding: 10px; font-size:30px;" value="グラフ描画" onclick="makenodeedge()">
+<!-- <input type="button" value="destroy" onclick="network.destroy()"> -->
+<input type="button" value="Pokemon_datas" onclick="console.log(Pokemon_datas)">
+<button onclick="func1()">リロード</button>
+
+<div id="network"></div>
+<script type="text/javascript">
+
+s = ""
+r = 1000
+name = "" 
+terasu = ""
+item =""
+
+k=makegraph(s,r,name,terasu,item)
+//console.log(k)
+var Pokemon_datas = k[0]
+var nodes = new vis.DataSet(k[2]);
+var edges = new vis.DataSet(k[1]);
+
+var container = document.getElementById('network');
+      var datas = {
+        nodes: nodes,
+        edges: edges
+      };
+      var options = {
+
+    nodes: {
+      color: "blue",
+      
+      shape: "dot",
+    //scaling: { label: { enabled: true} }
+
+    },
+    edges: {
+    color: {
+      color:'orange',
+      highlight:'orange',
+      hover: 'orange',
+    },
+    },
+    physics: {
+      enabled: true
+    }
+  };
+
+      //var network = new vis.Network(container, datas, options);
+k[0].sort((a, b) => b.value - a.value);
+
+option_pokemon()
+option_season()
+option_terasu()
+option_item()
+
+
+</script>
+        
+      
+      
+  </body>
+</html>
