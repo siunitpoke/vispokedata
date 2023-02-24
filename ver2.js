@@ -163,6 +163,9 @@ function watchparty() {
 //   function graphcreate(){
 //     var network = new vis.Network(container, datas, options);
 //   }
+
+var itemnamedata=[];
+var numberitem =[]
 var input_data = {s:"",r:10,name:"",terasu:"",item:""}
   function makenodeedge(){
 
@@ -187,17 +190,77 @@ var datas = {
   };
   var network = new vis.Network(container, datas, options);
   //クリック時のイベント
+
+  fclick = 0
 network.on("click", function(params) {
     if (params.nodes.length == 1) {
       var nodeId = params.nodes[0];
       var node = nodes.get(nodeId);
       console.log(node.label + 'がクリックされました');
+      itemnamedata = []
+      numberitem = []
+      terasunamedata = []
+      numberterasu = []
+      const targetgraphitem = k[0].findIndex((v) => v.name === node.label);
+      console.log(itemnamedata,numberitem)
+      sumnumber = 0
+      alertlogitem = ""
+      k[0][targetgraphitem].i.sort((a, b) => b.value - a.value);
+      console.log(k[0][targetgraphitem].i.length)
+      for (let i = 0; i < k[0][targetgraphitem].i.length;++i){
+        sumnumber += k[0][targetgraphitem].i[i].value
+      }
+      for (let i = 0; i < k[0][targetgraphitem].i.length;++i){
+        itemnamedata.push(k[0][targetgraphitem].i[i].item)
+        numberitem.push(k[0][targetgraphitem].i[i].value)
+        alertlogitem += k[0][targetgraphitem].i[i].item + " "+String(k[0][targetgraphitem].i[i].value)+"/"+String(sumnumber)+"\n"
+      }
+      alertlogitem+= "参考 全体のデータ\n"
+
+      const targetgraphitem2 = Pokemon_datas.findIndex((v) => v.name === node.label);
+      sumnumber2 = 0
+      Pokemon_datas[targetgraphitem2].i.sort((a, b) => b.value - a.value);
+      for (let i = 0; i < Pokemon_datas[targetgraphitem2].i.length;++i){
+        sumnumber2 += Pokemon_datas[targetgraphitem2].i[i].value
+      }
+      for (let i = 0; i < Pokemon_datas[targetgraphitem2].i.length;++i){
+        // itemnamedata.push(Pokemon_datas[targetgraphitem2].i[i].item)
+        // numberitem.push(Pokemon_datas[targetgraphitem2].i[i].value)
+        alertlogitem += Pokemon_datas[targetgraphitem2].i[i].item + " "+String(Pokemon_datas[targetgraphitem2].i[i].value)+"/"+String(sumnumber2)+"\n"
+      }
+
+      alertlogterasu = ""
+      k[0][targetgraphitem].t.sort((a, b) => b.value - a.value);
+      for (let i = 0; i < k[0][targetgraphitem].t.length;++i){
+        terasunamedata.push(k[0][targetgraphitem].t[i].type)
+        numberterasu.push(k[0][targetgraphitem].t[i].value)
+        alertlogterasu += k[0][targetgraphitem].t[i].type + " "+String(k[0][targetgraphitem].t[i].value)+"/"+String(sumnumber)+"\n"
+      }
+      alertlogterasu+= "参考 全体のデータ\n"
+      Pokemon_datas[targetgraphitem2].t.sort((a, b) => b.value - a.value);
+
+      for (let i = 0; i < Pokemon_datas[targetgraphitem2].t.length;++i){
+        // terasunamedata.push(Pokemon_datas[targetgraphitem2].t[i].item)
+        // numberterasu.push(Pokemon_datas[targetgraphitem2].t[i].value)
+        alertlogterasu += Pokemon_datas[targetgraphitem2].t[i].type + " "+String(Pokemon_datas[targetgraphitem2].t[i].value)+"/"+String(sumnumber2)+"\n"
+      }
+      alert(alertlogitem)
+      alert(alertlogterasu)
+      myChart.data.label = itemnamedata
+      myChart.data.data = numberitem
+      myChart.update()
+
+
+
     }
   });
 
+  
+
+
+
 
   }
-
 
 var pokemonnamejp = new Array(
     "",  //ダミーの項目を一つ追加します
