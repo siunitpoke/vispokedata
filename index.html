@@ -5,12 +5,22 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.min.css" rel="stylesheet">
     <style type="text/css">
       #network {
-        width:  1200px;
+        width:  700px;
         height: 700px;
         border: 1px solid #000;
       }
     </style>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.min.js"></script>
+
+    <!-- chart.js -->
+
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <script
+  src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.2.0/chart.min.js"
+  integrity="sha512-VMsZqo0ar06BMtg0tPsdgRADvl0kDHpTbugCBBrL55KmucH6hP9zWdLIWY//OTfMnzz6xWQRxQqsUFefwHuHyg=="
+  crossorigin="anonymous"></script>
+<script
+  src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@next/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
 
     <meta charset="utf-8">
     <title>Pokemon</title>
@@ -64,7 +74,6 @@
 
 
   <body>
-
 <!-- <input type="button" value="パーティー" onclick="watchparty()">
 <input type="button" value="持ち物" onclick="item_list()">
 <input type="button" value="テラスタイプ" onclick="t_list()"> -->
@@ -78,10 +87,15 @@
 <input type="button" style="color: red;    width: 200px;
 padding: 10px; font-size:30px;" value="グラフ描画" onclick="makenodeedge()">
 <!-- <input type="button" value="destroy" onclick="network.destroy()"> -->
-<input type="button" value="Pokemon_datas" onclick="console.log(Pokemon_datas)">
-<button onclick="func1()">リロード</button>
+<!-- <input type="button" value="Pokemon_datas" onclick="console.log(Pokemon_datas)">
+<button onclick="func1()">リロード</button> -->
+
 
 <div id="network"></div>
+<div style="width:400px; text-align: right">
+  <canvas id="mychart"></canvas>
+</div>
+
 <script type="text/javascript">
 
 s = ""
@@ -130,9 +144,19 @@ option_season()
 option_terasu()
 option_item()
 
-
+var ctx = document.getElementById('mychart');
+    var myChart = new Chart(ctx, {
+    type: 'pie',
+    data: {
+        labels: itemnamedata,
+        datasets: [{
+        data: [3,2,1],
+        weight: 30,
+        }],
+    },
+    });
 </script>
-        
+
       
       
   </body>
